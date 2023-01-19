@@ -14,4 +14,6 @@ def create_app(test_config=None):
     from app.auth.views import bp as auth
     app.register_blueprint(auth)
 
+    app.add_url_rule("/", endpoint="index")
+
     return app
