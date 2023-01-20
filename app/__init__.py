@@ -12,7 +12,9 @@ def create_app(test_config=None):
     database.init_app(app)
 
     from app.auth.views import bp as auth
+    from app.post.views import bp as post
     app.register_blueprint(auth)
+    app.register_blueprint(post)
 
     app.add_url_rule("/", endpoint="index")
 
