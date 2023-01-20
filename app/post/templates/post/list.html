@@ -1,0 +1,12 @@
+<div>
+    <a href="{{ url_for('post.create_post') }}">Create Post</a>
+    {% if posts|length > 0 %}
+    <ul>
+        {% for post in posts %}
+        <li><a href="{{ url_for('post.retrieve_post', uid=post.uid) }}">{{ post.title }} - {{ post.author.name }}</a></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <div>No posts available.</div>
+    {% endif %}
+</div>
