@@ -19,3 +19,5 @@ Authenticate user with JWT
 Control user access and activity in application using permission.
 ### Deployment with WSGI+Nginx and Docker
 Deploy project with WSGI+Nginx, and wrap into container.
+### Basic security
+Work on CSRF Protection
