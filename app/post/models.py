@@ -7,6 +7,7 @@ from app.database import Base
 
 
 class Post(Base):
+    __tablename__ = 'post'
     uid = Column(Integer, primary_key=True)
     title = Column(String)
     author_id = Column(Integer, ForeignKey('user.uid'))
