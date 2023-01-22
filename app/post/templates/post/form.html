@@ -1,0 +1,15 @@
+{% if post %}
+<h3>Update Post</h3>
+<form method="POST">
+    <input type="text" name="title" placeholder="Title" value="{{ post.title }}">
+    <textarea name="content">{{ post.content }}</textarea>
+    <input type="submit" value="Save">
+</form>
+{% else %}
+<h3>Create Post</h3>
+<form method="POST">
+    <input type="text" name="title" placeholder="Title">
+    <textarea name="content"></textarea>
+    <input type="submit" value="Save">
+</form>
+{% endif %}

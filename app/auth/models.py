@@ -1,6 +1,7 @@
 import datetime
 
 from sqlalchemy import Column, Integer, String, DateTime, event
+from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from app.database import Base
@@ -12,6 +13,7 @@ class User(Base):
     email = Column(String(128), unique=True)
     password = Column(String(128))
     name = Column(String(100))
+    posts = relationship('Post', back_populates='author')
     created_at = Column(DateTime(), default=datetime.datetime.utcnow)
     last_update = Column(DateTime(), onupdate=datetime.datetime.utcnow)
 
