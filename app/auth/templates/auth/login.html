@@ -1,5 +1,6 @@
 <form method="POST">
-    <input type="email" name="username" placeholder="Email">
-    <input type="password" name="password" placeholder="Password">
-    <input type="submit" value="Login">
+    {{ form.csrf_token }}
+    <div>{{ form.username.label }} {{ form.username }}</div>
+    <div>{{ form.password.label }} {{ form.password }}</div>
+    <div>{{ form.submit }}</div>
 </form>
