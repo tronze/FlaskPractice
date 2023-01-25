@@ -1,15 +1,8 @@
-{% if post %}
-<h3>Update Post</h3>
+<h3>Post</h3>
 <form method="POST">
-    <input type="text" name="title" placeholder="Title" value="{{ post.title }}">
-    <textarea name="content">{{ post.content }}</textarea>
-    <input type="submit" value="Save">
+    <div>{{ form.csrf_token }}</div>
+    <div>{{ form.title.label }} {{ form.title }}</div>
+    <div>{{ form.content.label }} {{ form.content }}</div>
+    <div>{{ form.submit }}</div>
+    <div>{{ form.errors }}</div>
 </form>
-{% else %}
-<h3>Create Post</h3>
-<form method="POST">
-    <input type="text" name="title" placeholder="Title">
-    <textarea name="content"></textarea>
-    <input type="submit" value="Save">
-</form>
-{% endif %}

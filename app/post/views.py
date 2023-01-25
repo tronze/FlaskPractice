@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, abort, request, g, session, redire
 
 from app.auth.models import User
 from app.database import db_session
+from app.post.forms import PostForm
 from app.post.models import Post
 
 bp = Blueprint('post', __name__, url_prefix='/posts', template_folder='templates/post')
@@ -23,13 +24,12 @@ def retrieve_post(uid):
 
 @bp.route('/create', methods=('GET', 'POST'))
 def create_post():
-    if request.method == 'POST':
-        title = request.form.get('title')
+    form = PostForm()
+    if form.validate_on_submit():
+        title = form.title.data
         author = User.query.get(session.get("user_id"))
-        content = request.form.get('content')
+        content = form.content.data
 
-        if not title or not content:
-            abort(400)
         post = Post(
             title=title,
             author=author,
@@ -38,7 +38,7 @@ def create_post():
         db_session.add(post)
         db_session.commit()
         return redirect(url_for('post.retrieve_post', uid=post.uid))
-    return render_template('form.html')
+    return render_template('form.html', form=form)
 
 
 @bp.route('/<int:uid>/update', methods=('GET', 'POST'))
@@ -46,18 +46,13 @@ def update_post(uid):
     post = Post.query.get(uid)
     if post is None:
         abort(404)
-    if request.method == 'POST':
-        title = request.form.get('title')
-        content = request.form.get('content')
 
-        if not title or not content:
-            abort(400)
-        post.title = title
-        post.content = content
-        db_session.add(post)
+    form = PostForm(obj=post)
+    if form.validate_on_submit():
+        form.populate_obj(post)
         db_session.commit()
         return redirect(url_for('post.retrieve_post', uid=post.uid))
-    return render_template('form.html', post=post)
+    return render_template('form.html', form=form)
 
 
 @bp.route('/<int:uid>/delete', methods=('GET', 'POST'))
