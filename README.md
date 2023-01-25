@@ -6,6 +6,7 @@ Project for practicing popular Flask project architecture.
 * Flask
 * SQLAlchemy
 * Alembic
+* Flask WTF
 ## Goal of the project
 ### Simple Flask Project Architecture
 Make Project with most used architecture for small or large web application project.
