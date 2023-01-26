@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, abort, request, g, session, redirect, url_for
 
-from app.auth.models import User
+from app.auth.decorators import login_required
 from app.database import db_session
 from app.post.forms import PostForm
 from app.post.models import Post
@@ -9,12 +9,14 @@ bp = Blueprint('post', __name__, url_prefix='/posts', template_folder='templates
 
 
 @bp.route('/')
+@login_required
 def list_posts():
     posts = Post.query.all()
     return render_template('list.html', posts=posts)
 
 
 @bp.route('/<int:uid>')
+@login_required
 def retrieve_post(uid):
     post = Post.query.filter(Post.uid == uid).one_or_none()
     if post is None:
@@ -23,6 +25,7 @@ def retrieve_post(uid):
 
 
 @bp.route('/create', methods=('GET', 'POST'))
+@login_required
 def create_post():
     form = PostForm()
     if form.validate_on_submit():
@@ -42,6 +45,7 @@ def create_post():
 
 
 @bp.route('/<int:uid>/update', methods=('GET', 'POST'))
+@login_required
 def update_post(uid):
     post = Post.query.get(uid)
     if post is None:
@@ -56,6 +60,7 @@ def update_post(uid):
 
 
 @bp.route('/<int:uid>/delete', methods=('GET', 'POST'))
+@login_required
 def delete_post(uid):
     post = Post.query.get(uid)
     if post is None:
