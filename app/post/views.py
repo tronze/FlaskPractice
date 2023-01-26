@@ -30,7 +30,7 @@ def create_post():
     form = PostForm()
     if form.validate_on_submit():
         title = form.title.data
-        author = User.query.get(session.get("user_id"))
+        author = g.user
         content = form.content.data
 
         post = Post(
