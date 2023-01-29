@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, abort, request, g, session, redirect, url_for
 
-from app.auth.decorators import login_required
+from app.auth.decorators import login_required, ownership_required
 from app.database import db_session
 from app.post.forms import PostForm
 from app.post.models import Post
@@ -46,6 +46,7 @@ def create_post():
 
 @bp.route('/<int:uid>/update', methods=('GET', 'POST'))
 @login_required
+@ownership_required(Post, 'author')
 def update_post(uid):
     post = Post.query.get(uid)
     if post is None:
@@ -61,6 +62,7 @@ def update_post(uid):
 
 @bp.route('/<int:uid>/delete', methods=('GET', 'POST'))
 @login_required
+@ownership_required(Post, 'author')
 def delete_post(uid):
     post = Post.query.get(uid)
     if post is None:
